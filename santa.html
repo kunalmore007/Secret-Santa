@@ -22,12 +22,14 @@
   </div>-->
 
   <!-- ADMIN -->
-  <input id="nameInput" placeholder="Add participant name">
-  <button onclick="addUser()">Add</button>
 
-  <ul id="userList"></ul>
-  <button onclick="shuffle()">🎲 Shuffle & Lock</button>
+  <div id="adminPanel" class="hidden">
+    <input id="nameInput" placeholder="Add participant name">
+    <button onclick="addUser()">Add</button>
 
+    <ul id="userList"></ul>
+    <button onclick="shuffle()">🎲 Shuffle & Lock</button>  
+  </div>
   <hr>
 
   <!-- REVEAL -->
