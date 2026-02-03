@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎁 Secret Santa</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+</head>
+<body class="center gradient-bg">
+
+<div class="card">
+  <h1>🎁 Secret Santa</h1>
+  <p>Secure • Fair • One-to-One</p>
+
+  <!-- ADMIN -->
+  <input id="nameInput" placeholder="Add participant name">
+  <button onclick="addUser()">Add</button>
+
+  <ul id="userList"></ul>
+  <button onclick="shuffle()">🎲 Shuffle & Lock</button>
+
+  <hr>
+
+  <!-- REVEAL -->
+  <input id="rName" placeholder="Your Name">
+  <input id="rPin" placeholder="Your PIN">
+  <button onclick="prepareReveal()">Reveal</button>
+
+  <div id="gift" class="gift hidden" onclick="openGift()"></div>
+  <div id="result" class="reveal hidden"></div>
+</div>
+
+<script src="js/santa.js"></script>
+</body>
+</html>
