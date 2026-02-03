@@ -1,3 +1,9 @@
+let adminPass = localStorage.getItem("adminPass");
+let adminUnlocked = localStorage.getItem("adminUnlocked") === "true";
+
+const adminAuth = document.getElementById("adminAuth");
+const adminPanel = document.getElementById("adminPanel");
+
 let users = JSON.parse(localStorage.getItem("users")) || [];
 let map = JSON.parse(localStorage.getItem("map")) || {};
 let locked = localStorage.getItem("locked") === "true";
@@ -25,21 +31,19 @@ function addUser(){
   render();
 }
 
-function shuffle(){
-  if(users.length < 3) return alert("Minimum 3 participants!");
-  let names = users.map(u=>u.name), shuffled;
+function shuffle() {
+    if (!adminUnlocked) return alert("Admin access required");
 
-  do {
-    shuffled = [...names].sort(()=>Math.random() - 0.5);
-  } while(shuffled.some((n,i)=>n===names[i]));
+      // existing shuffle logic...
 
-  names.forEach((n,i)=> map[n]=shuffled[i]);
+        localStorage.setItem("locked", "true");
+          localStorage.removeItem("adminUnlocked");
+            locked = true;
+              adminUnlocked = false;
 
-  localStorage.setItem("map", JSON.stringify(map));
-  localStorage.setItem("locked", "true");
-  locked = true;
-
-  alert("🎁 Shuffled & Locked!");
+                updateAdminUI();
+                  alert("🎁 Shuffled & Locked forever!");
+                  }
 }
 
 function prepareReveal(){
@@ -64,3 +68,48 @@ function openGift(){
     <p>Keep it secret 🤫</p>
   `;
 }
+
+function adminLogin() {
+  const input = document.getElementById("adminPassInput").value.trim();
+
+    // First time: set passcode
+      if (!adminPass) {
+          if (input.length < 4) {
+              alert("Passcode must be at least 4 digits");
+              return;
+          }
+          localStorage.setItem("adminPass", input);
+          localStorage.setItem("adminUnlocked", "true");
+          alert("✅ Admin passcode set!");
+      } 
+      // Existing admin login
+      else if (input === adminPass) {
+          localStorage.setItem("adminUnlocked", "true");
+      } 
+      else {
+          alert("❌ Wrong admin passcode");
+          return;
+      }
+
+      adminUnlocked = true;
+      updateAdminUI();
+}
+
+function updateAdminUI() {
+  if (locked) {
+      adminAuth.classList.add("hidden");
+          adminPanel.classList.add("hidden");
+              return;
+                }
+
+                  if (adminUnlocked) {
+                      adminAuth.classList.add("hidden");
+                          adminPanel.classList.remove("hidden");
+                            } else {
+                                adminAuth.classList.remove("hidden");
+                                    adminPanel.classList.add("hidden");
+                                      }
+                                      }
+updateAdminUI();                                                               
+
+
